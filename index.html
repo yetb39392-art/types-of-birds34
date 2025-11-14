@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رتب الطيور - عرض تقديمي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #0F1419 0%, #1A2F3F 50%, #16213E 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            perspective: 1200px;
+        }
+
+        .slide {
+            display: none;
+            opacity: 0;
+            transform: translateX(150px) rotateY(15deg) scale(0.9);
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+            min-height: 650px;
+            padding: 70px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 107, 107, 0.2);
+            background: linear-gradient(135deg, #1A1F2E 0%, #2D3142 100%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .slide.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0) rotateY(0) scale(1);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.15), transparent);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -30%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.1), transparent);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+            animation: slideInDown 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: -2px;
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.2em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid rgba(255, 107, 107, 0.5);
+            animation: slideInDown 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #34D399;
+            margin-bottom: 50px;
+            font-weight: 300;
+            animation: fadeIn 1.2s ease-out 0.3s backwards;
+            line-height: 1.6;
+        }
+
+        .text-content {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #E5E7EB;
+            margin-bottom: 25px;
+            animation: slideInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
+            letter-spacing: 0.5px;
+        }
+
+        .order-box {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(52, 211, 153, 0.05));
+            border-left: 6px solid #FF6B6B;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            animation: slideInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+            transition: all 0.4s ease;
+        }
+
+        .order-box:hover {
+            border-left: 6px solid #FFA500;
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.15), rgba(52, 211, 153, 0.1));
+            transform: translateX(10px);
+        }
+
+        .order-box h3 {
+            background: linear-gradient(135deg, #FF8E53 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .characteristics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .char-item {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 165, 0, 0.1));
+            color: #F3F4F6;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            animation: fadeIn 1s ease-out 0.5s backwards;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .char-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .char-item:hover::before {
+            left: 100%;
+        }
+
+        .char-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 165, 0, 0.6);
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 107, 107, 0.15));
+        }
+
+        .char-item strong {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #FFA500;
+        }
+
+        .char-item p {
+            font-size: 0.95em;
+            line-height: 1.8;
+            color: #D1D5DB;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            gap: 30px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+        }
+
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+        }
+
+        .page-indicator {
+            font-size: 1.3em;
+            color: #34D399;
+            font-weight: 700;
+            min-width: 80px;
+            text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 107, 107, 0.2);
+            border-radius: 3px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6B6B, #FF8E53, #FFA500);
+            border-radius: 3px;
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin-bottom: 30px;
+            animation: bounce 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.1); }
+        }
+
+        .signature-box {
+            margin-top: 50px;
+            text-align: center;
+            border-top: 2px dashed rgba(255, 107, 107, 0.5);
+            padding-top: 30px;
+            animation: slideInUp 1s ease-out 0.4s backwards;
+        }
+
+        .signature-box p {
+            font-size: 1.3em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF6B6B, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 25px;
+                min-height: auto;
+            }
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 2em; }
+            .text-content { font-size: 1em; }
+            .characteristics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="content">
+                <div class="emoji">🦅</div>
+                <h1>رتب الطيور</h1>
+                <p class="subtitle">🌍 دراسة شاملة عن التصنيفات البيولوجية والخصائص المعقدة للطيور 🌍</p>
+                <p class="text-content">
+                    يتناول هذا العرض تحليلاً معمقاً لمختلف رتب الطيور (Orders) وتصنيفاتها البيولوجية، مع استكشاف الخصائص التشريحية والسلوكية والبيئية التي تميز كل رتبة، وكيفية تطورها عبر الزمن الجيولوجي.
+                </p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" style="width: 25%;"></div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Basic Classification -->
+        <div class="slide">
+            <div class="content">
+                <h2>🔬 التصنيف الأساسي للطيور</h2>
+                <p class="text-content">
+                    تُقسَّم الطيور (الصنف Aves) إلى عدد من الرتب المختلفة بناءً على خصائص تشريحية وبيولوجية معقدة. يوجد حالياً أكثر من 40 رتبة معترف بها، تضم أكثر من 10,000 نوع من الطيور الحية.
+                </p>
+                
+                <div class="order-box">
+                    <h3>📊 معايير التصنيف الرئيسية:</h3>
+                    <div class="text-content">
+                        ⚙️ <strong>الخصائص التشريحية</strong><br>
+                        البنية الهيكلية والعظمية المتخصصة<br><br>
+                        🧬 <strong>الخصائص الجزيئية والجينية</strong><br>
+                        الحمض النووي والدراسات الحديثة<br><br>
+                        🎯 <strong>السلوك والتكاثر والتغذية</strong><br>
+                        أنماط الحياة والتفاعلات الاجتماعية<br><br>
+                        🌳 <strong>البيئة والموطن الطبيعي</strong><br>
+                        التكيف مع الأنظمة البيئية المختلفة
+                    </div>
+                </div>
+
+                <p class="text-content">
+                    ✨ تُعتبر الدراسات الجينية والحمض النووي من أهم الأدوات الحديثة في إعادة تصنيف الطيور وتوضيح العلاقات التطورية بينها.
+                </p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" style="width: 50%;"></div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Major Orders -->
+        <div class="slide">
+            <div class="content">
+                <h2>🦉 الرتب الرئيسية للطيور</h2>
+                
+                <div class="order-box">
+                    <h3>🦆 رتبة Passeriformes - الطيور الجاثمة</h3>
+                    <p class="text-content">
+                        أكبر رتبة من الطيور وتضم أكثر من 6,000 نوع (60% من جميع أنواع الطيور). تتميز بأرجل متخصصة للالتقاط على الأغصان. تشمل العصافير والغربان والبلابل.
+                    </p>
+                </div>
+
+                <div class="order-box">
+                    <h3>🦅 رتبة Accipitriformes - الجوارح</h3>
+                    <p class="text-content">
+                        تضم الصقور والنسور والحدأة. تتميز بمخالب قوية حادة وعيون حادة جداً وسلوك صيادي متطور. عدد الأنواع حوالي 250 نوع.
+                    </p>
+                </div>
+
+                <div class="order-box">
+                    <h3>🦉 رتبة Strigiformes - البوميات</h3>
+                    <p class="text-content">
+                        تضم البوم بأنواعها المختلفة. تتكيف للصيد الليلي بعيون كبيرة وسمع حاد جداً. حوالي 250 نوع منتشرة في جميع أنحاء العالم.
+                    </p>
+                </div>
+
+                <div class="order-box">
+                    <h3>🐧 رتبة Sphenisciformes - البطاريق</h3>
+                    <p class="text-content">
+                        طيور بحرية غير طائرة متخصصة للسباحة. تتمتع بأجسام انسيابية وزعانف قوية. توجد بشكل أساسي في نصف الكرة الجنوبي.
+                    </p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" style="width: 75%;"></div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Advanced Details -->
+        <div class="slide">
+            <div class="content">
+                <h2>⚡ الخصائص المتقدمة والتكيفات</h2>
+                
+                <div class="characteristics">
+                    <div class="char-item">
+                        <strong>🧬 التكيفات البيولوجية</strong>
+                        <p>الهياكل العظمية المجوفة، الزعانف الهوائية، القلب رباعي الحجرات، والجهاز التنفسي الديناميكي المتطور.</p>
+                    </div>
+                    <div class="char-item">
+                        <strong>🎯 التخصصات الغذائية</strong>
+                        <p>تتنوع بين آكلات البذور والحشرات والسمك واللحم والرحيق، مع مناقير متخصصة.</p>
+                    </div>
+                    <div class="char-item">
+                        <strong>🏠 التكيفات البيئية</strong>
+                        <p>من الطيور البحرية إلى الصحراوية والجبلية، مع ريش متخصص وسلوكيات حرارية محكومة.</p>
+                    </div>
+                    <div class="char-item">
+                        <strong>🎵 السلوكيات المعقدة</strong>
+                        <p>الغناء المتقن، الرقصات التزاوجية، البناء المعماري للأعشاش، والهجرات الطويلة.</p>
+                    </div>
+                </div>
+
+                <div class="order-box" style="margin-top: 40px;">
+                    <h3>🌿 الأهمية العلمية والبيئية</h3>
+                    <p class="text-content">
+                        تُعتبر الطيور مؤشرات حيوية مهمة للصحة البيئية، وتساهم في المكافحة البيولوجية والتلقيح وانتشار البذور. دراسة رتبها تساعد في فهم التطور البيولوجي والحفاظ على التنوع البيولوجي.
+                    </p>
+                </div>
+
+                <div class="signature-box">
+                    <p>📝 إعداد الطالب: نواف بن علي الحسين 📝</p>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="changeSlide(-1)">← السابق</button>
+            <span class="page-indicator">
+                <span id="currentSlide">1</span> / <span id="totalSlides">4</span>
+            </span>
+            <button id="nextBtn" onclick="changeSlide(1)">التالي →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide;
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(n) {
+            currentSlide += n;
+            showSlide(currentSlide);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
